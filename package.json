@@ -55,6 +55,9 @@
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
+    "@amax/amaxjs": "^0.0.3",
+    "@amax/anchor-link": "^3.5.13",
+    "@amax/anchor-link-browser-transport": "^3.5.2",
     "@babel/runtime": "^7.12.5",
     "@matrix-org/analytics-events": "^0.3.0",
     "@matrix-org/matrix-wysiwyg": "^0.6.0",
@@ -137,7 +140,7 @@
     "@babel/register": "^7.12.10",
     "@babel/traverse": "^7.12.12",
     "@casualbot/jest-sonar-reporter": "^2.2.5",
-    "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz",
+    "@matrix-org/olm": "https://xafj-ct11.baidupcs.com/file/bd6d74eb0nbed9250fd31321960f5de5?bkt=en-1d4f88d1767dc137c46cbb612185376fc3d5c0eafd92c07ee208f28b93c352820f3108182cb83ef275bf1e5bccdb96f0d659fffd209b81c5b53bbfd34c56288e&fid=2556187115-250528-978030465257448&time=1669945344&sign=FDTAXUbGERLQlBHSKfWqi-DCb740ccc5511e5e8fedcff06b081203-vnVQlGQGEbqTtRj8YLTu0LngTPo%3D&to=417&size=224123&sta_dx=224123&sta_cs=4&sta_ft=tgz&sta_ct=3&sta_mt=3&fm2=MH%2CXian%2CAnywhere%2C%2C%E5%B9%BF%E4%B8%9C%2Cct&ctime=1669190160&mtime=1669190160&resv0=0&resv1=0&resv2=rlim&resv3=5&resv4=224123&vuk=2556187115&iv=0&htype=&randtype=&tkbind_id=0&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-9bc2db15f2adc074a05163dc1451010587fe1d32c0827b8ae998c5a316264158de8642cdc046808b074d4bb3e0bb4422f3db44e4d1e9edb0305a5e1275657320&sl=68616270&expires=8h&rt=pr&r=735282224&vbdid=2589797689&fin=olm-3.2.12.tgz&fn=olm-3.2.12.tgz&rtype=1&dp-logid=8931897493331960131&dp-callid=0.1&hps=1&tsl=200&csl=200&fsl=0&csign=qK8Bo7S68KNxEDcOS5YB0WG%2FImk%3D&so=0&ut=6&uter=4&serv=0&uc=3527247757&ti=05df9239daa4064769d47dbf6944259fd264c342b75a7df4&hflag=30&from_type=1&adg=c_daa938eccbba6e0ac74bcd5497d67494&reqlabel=250528_f_647cabbf8b3965426e88276656466c13_-1_1b52922e33858b85450ef199c635a2de&by=themis",
     "@peculiar/webcrypto": "^1.4.1",
     "@percy/cli": "^1.11.0",
     "@percy/cypress": "^3.1.2",

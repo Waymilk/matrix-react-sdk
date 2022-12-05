@@ -134,11 +134,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // map from login step type to a function which will render a control
         // letting you do that login type
         this.stepRendererMap = {
-            'm.login.password': this.renderPasswordStep,
+            // 'm.login.password': this.renderPasswordStep,
 
             // CAS and SSO are the same thing, modulo the url we link to
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            'm.login.cas': () => this.renderSsoStep("cas"),
+            // 'm.login.cas': () => this.renderSsoStep("cas"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.sso': () => this.renderSsoStep("sso"),
         };
@@ -600,7 +600,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
-                        { _t('Sign in') }
+                        { _t('Sign in') + '55' }
                         { loader }
                     </h1>
                     { errorTextSection }

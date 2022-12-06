@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Amax from '@amax/amaxjs';
 import AnchorLink from '@amax/anchor-link';
 import AnchorLinkBrowserTransport from '@amax/anchor-link-browser-transport';
-let _getClient = null;
 
 console.log('chainId---', process.env.REACT_APP_NETWORK_chainId);
 
@@ -29,8 +27,6 @@ export const network = {
     chainId: '208dacab3cd2e181c86841613cf05d9c60786c677e4ce86b266d0a58884968f7', // Or null to fetch automatically ( takes longer )
     protocol: 'https',
 };
-
-
 
 export const isAPLink = window.navigator.userAgent
     .toLowerCase()

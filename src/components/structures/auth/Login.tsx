@@ -584,14 +584,15 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             </div>;
         } else if (SettingsStore.getValue(UIFeature.Registration)) {
             footer = (
-                <span className="mx_AuthBody_changeFlow">
-                    { _t("New? <a>Create account</a>", {}, {
-                        a: sub =>
-                            <AccessibleButton kind='link_inline' onClick={this.onTryRegisterClick}>
-                                { sub }
-                            </AccessibleButton>,
-                    }) }
-                </span>
+                <span />
+                // <span className="mx_AuthBody_changeFlow">
+                //     { _t("New? <a>Create account</a>", {}, {
+                //         a: sub =>
+                //             <AccessibleButton kind='link_inline' onClick={this.onTryRegisterClick}>
+                //                 { sub }
+                //             </AccessibleButton>,
+                //     }) }
+                // </span>
             );
         }
 
@@ -600,7 +601,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
-                        { _t('Sign in') + '66' }
+                        { _t('Sign in') + '99' }
                         { loader }
                     </h1>
                     { errorTextSection }

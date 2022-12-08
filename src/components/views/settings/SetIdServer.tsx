@@ -145,6 +145,8 @@ export default class SetIdServer extends React.Component<IProps, IState> {
     };
 
     private saveIdServer = (fullUrl) => {
+        console.log(fullUrl, 'saveIdServer==>fullUrl');
+        debugger;
         // Account data change will update localstorage, client, etc through dispatcher
         MatrixClientPeg.get().setAccountData("m.identity_server", {
             base_url: fullUrl,
@@ -162,7 +164,6 @@ export default class SetIdServer extends React.Component<IProps, IState> {
         const { idServer, currentClientIdServer } = this.state;
 
         this.setState({ busy: true, checking: true, error: null });
-
         const fullUrl = unabbreviateUrl(idServer);
 
         let errStr = await checkIdentityServerUrl(fullUrl);

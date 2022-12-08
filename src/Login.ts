@@ -172,6 +172,7 @@ export async function sendLoginRequest(
     loginType: string,
     loginParams: ILoginParams,
 ): Promise<IMatrixClientCreds> {
+    //点击第三方登录login接口的时候调用
     const client = createClient({
         baseUrl: hsUrl,
         idBaseUrl: isUrl,

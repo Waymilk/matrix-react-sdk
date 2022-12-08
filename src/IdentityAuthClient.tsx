@@ -46,6 +46,8 @@ export default class IdentityAuthClient {
      */
     constructor(identityUrl?: string) {
         if (identityUrl) {
+            // debugger;
+            // alert({identityUrl, 'identityUAythClient ==> identityUrl'});
             // XXX: We shouldn't have to create a whole new MatrixClient just to
             // do identity server auth. The functions don't take an identity URL
             // though, and making all of them take one could lead to developer
@@ -53,7 +55,7 @@ export default class IdentityAuthClient {
             // just make a new client and live with it.
             this.tempClient = createClient({
                 baseUrl: "", // invalid by design
-                idBaseUrl: identityUrl,
+                idBaseUrl: 'https://test-chain.ambt.art',
             });
         }
     }

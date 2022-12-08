@@ -651,6 +651,9 @@ function showStorageEvictedDialog(): Promise<boolean> {
 class AbortLoginAndRebuildStorage extends Error { }
 
 async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {
+    console.log('entered persistCredentials');
+    alert(4445);
+    credentials.accessToken = 'syt_bWF0cml4X21pbGt3YXk_TckbkGUtGStjziZYHGtb_1SahEZ';
     localStorage.setItem(HOMESERVER_URL_KEY, credentials.homeserverUrl);
     if (credentials.identityServerUrl) {
         localStorage.setItem(ID_SERVER_URL_KEY, credentials.identityServerUrl);
@@ -665,7 +668,6 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     } else {
         localStorage.deleteItem("mx_has_access_token");
     }
-
     if (credentials.pickleKey) {
         let encryptedAccessToken: IEncryptedPayload;
         try {
@@ -703,7 +705,6 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
             logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
         }
     }
-
     // if we didn't get a deviceId from the login, leave mx_device_id unset,
     // rather than setting it to "undefined".
     //

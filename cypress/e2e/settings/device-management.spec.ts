@@ -26,6 +26,8 @@ describe("Device manager", () => {
     beforeEach(() => {
         cy.enableLabsFeature("feature_new_device_manager");
         cy.startSynapse("default").then(data => {
+            // debugger;
+            // alert(data, 'device-manage');
             synapse = data;
 
             cy.initTestUser(synapse, "Alice").then(credentials => {

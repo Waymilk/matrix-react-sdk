@@ -54,8 +54,8 @@ export function initLink() {
     return (window as any).AnchorLink;
 }
 
-export async function getContract(abiName: any) {
-    const client = await getClient();
-    const contract = await client.contract(abiName);
-    return contract;
-}
+// export async function getContract(abiName: any) {
+//     const client = await getClient();
+//     const contract = await client.contract(abiName);
+//     return contract;
+// }

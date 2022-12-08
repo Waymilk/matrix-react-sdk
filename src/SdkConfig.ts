@@ -100,6 +100,8 @@ export default class SdkConfig {
     }
 
     public static add(cfg: Partial<IConfigOptions>) {
+        // console.log(cfg, 'cfgcfgcfgcfg');
+        // debugger;
         SdkConfig.put({ ...SdkConfig.get(), ...cfg });
     }
 }

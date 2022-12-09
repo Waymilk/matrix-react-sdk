@@ -417,6 +417,7 @@ async function abortLogin() {
 //      SessionStore to avoid bugs where the view becomes out-of-sync with
 //      localStorage (e.g. isGuest etc.)
 export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }): Promise<boolean> {
+    //milkway
     const ignoreGuest = opts?.ignoreGuest;
 
     if (!localStorage) {
@@ -552,6 +553,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
     return doSetLoggedIn(credentials, overwrite);
 }
 
+// milkway
 /**
  * fires on_logging_in, optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
@@ -565,6 +567,10 @@ async function doSetLoggedIn(
     credentials: IMatrixClientCreds,
     clearStorageEnabled: boolean,
 ): Promise<MatrixClient> {
+    console.log(credentials, 'credentials');
+    credentials.accessToken = 'syt_amFtZXMxMTIyMzMz_bSFPIlDOEOHrQvNBGcJf_2iw99M';
+    credentials.userId = '@james1122333:matrix.ambt.art';
+    credentials.homeserverUrl = 'https://matrix.ambt.art/';
     credentials.guest = Boolean(credentials.guest);
 
     const softLogout = isSoftLogout();
@@ -652,8 +658,8 @@ class AbortLoginAndRebuildStorage extends Error { }
 
 async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {
     console.log('entered persistCredentials');
-    alert(4445);
-    credentials.accessToken = 'syt_bWF0cml4X21pbGt3YXk_TckbkGUtGStjziZYHGtb_1SahEZ';
+    console.log(credentials,'credentials');
+    // credentials.accessToken = 'syt_bWF0cml4X21pbGt3YXk_TckbkGUtGStjziZYHGtb_1SahEZ';
     localStorage.setItem(HOMESERVER_URL_KEY, credentials.homeserverUrl);
     if (credentials.identityServerUrl) {
         localStorage.setItem(ID_SERVER_URL_KEY, credentials.identityServerUrl);
@@ -955,6 +961,7 @@ window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Prom
         accessToken,
     });
     const { user_id: userId } = await tempClient.whoami();
+    alert('window.mxLoginWithAccessToken');
     await doSetLoggedIn({
         homeserverUrl: hsUrl,
         accessToken,

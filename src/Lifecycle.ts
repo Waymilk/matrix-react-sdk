@@ -567,10 +567,12 @@ async function doSetLoggedIn(
     credentials: IMatrixClientCreds,
     clearStorageEnabled: boolean,
 ): Promise<MatrixClient> {
+    debugger;
     console.log(credentials, 'credentials');
-    credentials.accessToken = 'syt_amFtZXMxMTIyMzMz_bSFPIlDOEOHrQvNBGcJf_2iw99M';
-    credentials.userId = '@james1122333:matrix.ambt.art';
-    credentials.homeserverUrl = 'https://matrix.ambt.art/';
+    // credentials.accessToken = 'syt_bWlsa3dheQ_orZlVTgBPcXgtAPXEMZl_1rLZmb';
+    // credentials.userId = '@milkway:matrix.org';
+    // // credentials.homeserverUrl = 'https://matrix.ambt.art/';
+    // credentials.homeserverUrl = 'https://matrix-client.matrix.org/';
     credentials.guest = Boolean(credentials.guest);
 
     const softLogout = isSoftLogout();
@@ -640,6 +642,7 @@ async function doSetLoggedIn(
 
     dis.fire(Action.OnLoggedIn);
     await startMatrixClient(/*startSyncing=*/!softLogout);
+    alert('return client')
 
     return client;
 }

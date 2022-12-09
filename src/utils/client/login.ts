@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import * as Lifecycle from '../../Lifecycle';
 
 import { IdentityProof, ChainId, APIError } from "@amax/anchor-link";
 
@@ -90,4 +91,9 @@ export const handleConnect = async () => {
         identity,
     );
     console.log(account, proof, proofKey, proofValid, "ssss");
+    return Lifecycle.setLoggedIn({
+        homeserverUrl: 'https://matrix-client.matrix.org/',
+        accessToken: 'syt_bWF0cml4X21pbGt3YXk_sJuNpxVvJulcRKkvcKIV_1fcB1N',
+        userId: '@matrix_milkway:matrix.org',
+    });
 };

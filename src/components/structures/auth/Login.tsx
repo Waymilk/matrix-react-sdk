@@ -134,7 +134,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // map from login step type to a function which will render a control
         // letting you do that login type
         this.stepRendererMap = {
-            // 'm.login.password': this.renderPasswordStep,
+            'm.login.password': this.renderPasswordStep,
 
             // CAS and SSO are the same thing, modulo the url we link to
             // eslint-disable-next-line @typescript-eslint/naming-convention

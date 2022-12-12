@@ -91,9 +91,10 @@ export const handleConnect = async () => {
         identity,
     );
     console.log(account, proof, proofKey, proofValid, "ssss");
-    return Lifecycle.setLoggedIn({
-        homeserverUrl: 'https://matrix-client.matrix.org/',
-        accessToken: 'syt_bWF0cml4X21pbGt3YXk_sJuNpxVvJulcRKkvcKIV_1fcB1N',
-        userId: '@matrix_milkway:matrix.org',
-    });
+    if (window.mxLoginWithAccessToken) {
+        window.mxLoginWithAccessToken(
+            'https://matrix-client.matrix.org',
+            'syt_bWlsa3dheQ_mJkvlsxLwZPDTNTXjMkp_46Ai38',
+        );
+    }
 };

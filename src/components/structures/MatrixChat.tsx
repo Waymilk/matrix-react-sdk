@@ -343,7 +343,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // if the user has followed a login or register link, don't reanimate
                 // the old creds, but rather go straight to the relevant page
                 const firstScreen = this.screenAfterLogin ? this.screenAfterLogin.screen : null;
-
                 const restoreSuccess = await this.loadSession();
                 if (restoreSuccess) {
                     return true;

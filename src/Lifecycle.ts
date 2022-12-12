@@ -117,6 +117,8 @@ interface ILoadSessionOpts {
  *     failed.
  */
 export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean> {
+    console.log(opts,'opts');
+    // alert('loadSession')
     try {
         let enableGuest = opts.enableGuest || false;
         const guestHsUrl = opts.guestHsUrl;
@@ -417,6 +419,7 @@ async function abortLogin() {
 //      SessionStore to avoid bugs where the view becomes out-of-sync with
 //      localStorage (e.g. isGuest etc.)
 export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }): Promise<boolean> {
+    // alert('restoreFromLocalStorage')
     //milkway
     const ignoreGuest = opts?.ignoreGuest;
 
@@ -567,7 +570,6 @@ async function doSetLoggedIn(
     credentials: IMatrixClientCreds,
     clearStorageEnabled: boolean,
 ): Promise<MatrixClient> {
-    debugger;
     console.log(credentials, 'credentials');
     // credentials.accessToken = 'syt_bWlsa3dheQ_orZlVTgBPcXgtAPXEMZl_1rLZmb';
     // credentials.userId = '@milkway:matrix.org';
@@ -642,7 +644,7 @@ async function doSetLoggedIn(
 
     dis.fire(Action.OnLoggedIn);
     await startMatrixClient(/*startSyncing=*/!softLogout);
-    alert('return client')
+    // alert('return client')
 
     return client;
 }
@@ -959,15 +961,17 @@ export function stopMatrixClient(unsetClient = true): void {
 
 // Utility method to perform a login with an existing access_token
 window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Promise<void> => {
+    console.log(hsUrl,'hsUrl');
+    console.log(accessToken,'accessToken');
     const tempClient = createClient({
         baseUrl: hsUrl,
         accessToken,
     });
     const { user_id: userId } = await tempClient.whoami();
-    alert('window.mxLoginWithAccessToken');
     await doSetLoggedIn({
         homeserverUrl: hsUrl,
         accessToken,
         userId,
     }, true);
+    window.location.reload();
 };

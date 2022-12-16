@@ -445,17 +445,18 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     public render(): JSX.Element {
         const toolbarOpts = [];
-        if (canEditContent(this.props.mxEvent)) {
-            toolbarOpts.push(<RovingAccessibleTooltipButton
-                className="mx_MessageActionBar_iconButton"
-                title={_t("Edit")}
-                onClick={this.onEditClick}
-                onContextMenu={this.onEditClick}
-                key="edit"
-            >
-                <EditIcon />
-            </RovingAccessibleTooltipButton>);
-        }
+        // 注释编辑按钮
+        // if (canEditContent(this.props.mxEvent)) {
+        //     toolbarOpts.push(<RovingAccessibleTooltipButton
+        //         className="mx_MessageActionBar_iconButton"
+        //         title={_t("Edit")}
+        //         onClick={this.onEditClick}
+        //         onContextMenu={this.onEditClick}
+        //         key="edit"
+        //     >
+        //         <EditIcon />
+        //     </RovingAccessibleTooltipButton>);
+        // }
 
         const cancelSendingButton = <RovingAccessibleTooltipButton
             className="mx_MessageActionBar_iconButton"
@@ -497,9 +498,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // button is the very first button without having to do length checks for `splice()`.
 
                 if (this.context.canSendMessages) {
-                    if (this.showReplyInThreadAction) {
-                        toolbarOpts.splice(0, 0, threadTooltipButton);
-                    }
+                    // 注释thread功能
+                    // if (this.showReplyInThreadAction) {
+                    //     toolbarOpts.splice(0, 0, threadTooltipButton);
+                    // }
                     toolbarOpts.splice(0, 0, (
                         <RovingAccessibleTooltipButton
                             className="mx_MessageActionBar_iconButton"
@@ -512,14 +514,15 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         </RovingAccessibleTooltipButton>
                     ));
                 }
-                if (this.context.canReact) {
-                    toolbarOpts.splice(0, 0, <ReactButton
-                        mxEvent={this.props.mxEvent}
-                        reactions={this.props.reactions}
-                        onFocusChange={this.onFocusChange}
-                        key="react"
-                    />);
-                }
+                // 注释react功能
+                // if (this.context.canReact) {
+                //     toolbarOpts.splice(0, 0, <ReactButton
+                //         mxEvent={this.props.mxEvent}
+                //         reactions={this.props.reactions}
+                //         onFocusChange={this.onFocusChange}
+                //         key="react"
+                //     />);
+                // }
                 if (SettingsStore.getValue("feature_favourite_messages")) {
                     toolbarOpts.splice(-1, 0, (
                         <FavouriteButton key="favourite" mxEvent={this.props.mxEvent} />

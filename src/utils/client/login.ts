@@ -13,10 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import * as Lifecycle from '../../Lifecycle';
-
 import { IdentityProof, ChainId, APIError } from "@amax/anchor-link";
 
+import * as Lifecycle from '../../Lifecycle';
 import { initLink, network } from "./index";
 export const blockchains = [
     {
@@ -86,6 +85,7 @@ export const handleConnect = async () => {
     console.log(link, "linklink");
 
     const identity = await link.login("anchor-link-demo");
+    console.log(identity);
     const { account, proof, proofKey, proofValid } = await verifyProof(
         link,
         identity,
@@ -93,8 +93,8 @@ export const handleConnect = async () => {
     console.log(account, proof, proofKey, proofValid, "ssss");
     if (window.mxLoginWithAccessToken) {
         window.mxLoginWithAccessToken(
-            'https://matrix-client.matrix.org',
-            'syt_bWlsa3dheQ_mJkvlsxLwZPDTNTXjMkp_46Ai38',
+            'https://matrix.ambt.art',
+            'syt_amFtZXMxMTIyMzMz_bSFPIlDOEOHrQvNBGcJf_2iw99M',
         );
     }
 };

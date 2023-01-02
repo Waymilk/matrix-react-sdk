@@ -19,7 +19,9 @@ import { ConnectionError, MatrixError } from "matrix-js-sdk/src/http-api";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ISSOFlow, LoginFlow } from "matrix-js-sdk/src/@types/auth";
+import { IdentityProof, ChainId, APIError } from "@amax/anchor-link";
 
+// import { handleConnect } from '../../../utils/client/login';
 import { _t, _td } from '../../../languageHandler';
 import Login from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
@@ -39,7 +41,69 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import { initLink, network } from "../../../../src/utils/client/index";
+export const blockchains = [
+    {
+        chainId: network.chainId,
+        name: network.blockchain,
+        rpcEndpoints: [
+            {
+                protocol: network.protocol,
+                host: network.host,
+                port: 0,
+            },
+        ],
+    },
+];
 
+export async function verifyProof(link, identity) {
+    // Generate an array of valid chain IDs from the demo configuration
+    const chains = blockchains.map((chain) => chain.chainId);
+
+    // Create a proof helper based on the identity results from anchor-link
+    const proof = IdentityProof.from(identity.proof);
+
+    // Check to see if the chainId from the proof is valid for this demo
+    const chain = chains.find((id) => ChainId.from(id).equals(proof.chainId));
+    if (!chain) {
+        throw new Error("Unsupported chain supplied in identity proof");
+    }
+
+    // Load the account data from a blockchain API
+    // let account: API.v1.AccountObject;
+    let account = null;
+    try {
+        account = await link.client.v1.chain.get_account(proof.signer.actor);
+    } catch (error) {
+        if (error instanceof APIError && error.code === 0) {
+            throw new Error("No such account");
+        } else {
+            throw error;
+        }
+    }
+
+    // Retrieve the auth from the permission specified in the proof
+    const auth = account.getPermission(proof.signer.permission).required_auth;
+
+    // Determine if the auth is valid with the given proof
+    const valid = proof.verify(auth, account.head_block_time);
+
+    // If not valid, throw error
+    if (!valid) {
+        throw new Error("Proof invalid or expired");
+    }
+
+    // Recover the key from this proof
+    const proofKey = proof.recover();
+
+    // Return the values expected by this demo application
+    return {
+        account,
+        proof,
+        proofKey,
+        proofValid: valid,
+    };
+}
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
 _td("Invalid homeserver discovery response");
@@ -112,6 +176,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
     constructor(props) {
         super(props);
+        console.log(props.serverConfig, 'serverConfigserverConfigserverConfig');
 
         this.state = {
             busy: false,
@@ -196,7 +261,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             errorText: null,
             loginIncorrect: false,
         });
-
         this.loginLogic.loginViaPassword(
             username, phoneCountry, phoneNumber, password,
         ).then((data) => {
@@ -496,7 +560,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // this is the ideal order we want to show the flows in
         const order = [
             "m.login.password",
-            "m.login.sso",
+            // "m.login.sso",
         ];
 
         const flows = order.map(type => this.state.flows.find(flow => flow.type === type)).filter(Boolean);
@@ -595,23 +659,76 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 // </span>
             );
         }
+        const onClick = async () => {
+            console.log(445);
 
+            const link = initLink();
+            console.log(link, "linklink");
+            setTimeout(() => {
+                console.log(document.querySelector('.aplink-link-qr'), 'dom');
+            }, 500);
+            const identity = await link.login("anchor-link-demo");
+
+            console.log(identity);
+            const { account, proof, proofKey, proofValid } = await verifyProof(
+                link,
+                identity,
+            );
+
+            const walletAddress = proof.signer.actor.toString();
+            const authority = proof.signer.permission.toString();
+            console.log(proof.chainId.toString(), 'ChainId');
+
+            // const chainId = network.chainId;
+            // Storage.set('walletAddress', walletAddress);
+            // Storage.set('authority', authority);
+            // Storage.set('chainId', chainId);
+            const params = {
+                signature: proof.signature.toString(),
+                message: '',
+                wallet_address: walletAddress,
+                authority,
+                scope: proof.scope.toString(),
+                expiration: proof.expiration.toString(),
+            };
+            this.loginLogic.loginViaWallet(
+                params,
+            ).then((res) => {
+                console.log(res, 'loginViaWallet----res');
+                console.log(this.props.serverConfig.hsUrl, 'this.props.serverConfig.hsUrl');
+                console.log(window.mxLoginWithAccessToken, 'window.mxLoginWithAccessToken');
+
+                if (res.accessToken && window.mxLoginWithAccessToken) {
+                    window.mxLoginWithAccessToken(
+                        this.props.serverConfig.hsUrl,
+                        res.accessToken,
+                        res.user_id,
+                    );
+                }
+            });
+
+            // const authenticationType = getAuthenticationType(idp?.brand ?? "");
+            // PosthogAnalytics.instance.setAuthenticationType(authenticationType);
+            // PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
+        };
         return (
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
-                        { _t('Sign in') + '100' }
+                        { _t('Sign in') }
                         { loader }
                     </h1>
-                    { errorTextSection }
+                    <p className='connect-text'>连接钱包登录MetaDAO</p>
+                    { /* { errorTextSection }
                     { serverDeadSection }
                     <ServerPicker
                         serverConfig={this.props.serverConfig}
                         onServerConfigChange={this.props.onServerConfigChange}
                     />
-                    { this.renderLoginComponentForFlows() }
-                    { footer }
+                    { this.renderLoginComponentForFlows() } */ }
+                    <button className="qr-code" onClick={onClick}>连接Aplink钱包</button>
+                    { /* { footer } */ }
                 </AuthBody>
             </AuthPage>
         );

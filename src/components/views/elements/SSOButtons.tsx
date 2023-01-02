@@ -18,12 +18,10 @@ import React from "react";
 import { chunk } from "lodash";
 import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-
-
 import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
 import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "matrix-js-sdk/src/@types/auth";
 
-import { handleConnect } from '../../../utils/client/login'
+import { handleConnect } from '../../../utils/client/login';
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
 import { _t } from "../../../languageHandler";
@@ -105,7 +103,6 @@ interface IProps {
     fragmentAfterLogin?: string;
     primary?: boolean;
 }
-
 
 const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentAfterLogin, primary }) => {
     const providers = flow.identity_providers || [];

@@ -15,7 +15,6 @@ limitations under the License.
 */
 import { IdentityProof, ChainId, APIError } from "@amax/anchor-link";
 
-import * as Lifecycle from '../../Lifecycle';
 import { initLink, network } from "./index";
 export const blockchains = [
     {
@@ -83,18 +82,33 @@ export async function verifyProof(link, identity) {
 export const handleConnect = async () => {
     const link = initLink();
     console.log(link, "linklink");
+    link.login("anchor-link-demo");
 
     const identity = await link.login("anchor-link-demo");
     console.log(identity);
+
     const { account, proof, proofKey, proofValid } = await verifyProof(
         link,
         identity,
     );
-    console.log(account, proof, proofKey, proofValid, "ssss");
-    if (window.mxLoginWithAccessToken) {
-        window.mxLoginWithAccessToken(
-            'https://matrix.ambt.art',
-            'syt_amFtZXMxMTIyMzMz_bSFPIlDOEOHrQvNBGcJf_2iw99M',
-        );
-    }
+    const walletAddress = proof.signer.actor.toString();
+    const authority = proof.signer.permission.toString();
+    // const chainId = network.chainId;
+    // Storage.set('walletAddress', walletAddress);
+    // Storage.set('authority', authority);
+    // Storage.set('chainId', chainId);
+    const params = {
+        signature: proof.signature.toString(),
+        message: "",
+        wallet_address: walletAddress,
+        authority,
+        scope: proof.scope.toString(),
+        expiration: proof.expiration.toString(),
+    };
+    // if (window.mxLoginWithAccessToken) {
+    //     window.mxLoginWithAccessToken(
+    //         'https://matrix.ambt.art',
+    //         'syt_amFtZXMxMTIyMzMz_bSFPIlDOEOHrQvNBGcJf_2iw99M',
+    //     );
+    // }
 };

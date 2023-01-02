@@ -66,10 +66,10 @@
     create-hash "^1.1.3"
     fcbuffer "2.2.2"
 
-"@amax/anchor-link-browser-transport@^3.5.2":
-  version "3.5.2"
-  resolved "https://registry.npmmirror.com/@amax/anchor-link-browser-transport/-/anchor-link-browser-transport-3.5.2.tgz#0a6dc3b17234c1ce6dbc39ee0e3230d3276e6d9d"
-  integrity sha512-L3JVk7Vt9mpDIpIqB3IlBxMsnaWtTfreLRvAuqtTo8GAJrl3qX7e8mnbks7fbqpzJp9Xb5fOB+XShXQE7TtdRw==
+"@amax/anchor-link-browser-transport@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.npmmirror.com/@amax/anchor-link-browser-transport/-/anchor-link-browser-transport-3.6.2.tgz#7c184f4f35751a2545fb142aace111787f25fd8d"
+  integrity sha512-3BFFIizMfbscL6jJbxWw2pQttF1PU4rXTlxerqeVbOA/lcbK3OnxwJIGLmnKzMOJDsX5mr9tKYlJmui0trD6vg==
   dependencies:
     tslib "^2.0.3"
 

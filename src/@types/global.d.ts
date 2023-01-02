@@ -106,7 +106,7 @@ declare global {
         mxOnRecaptchaLoaded?: () => void;
         electron?: Electron;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
-        mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
+        mxLoginWithAccessToken: (hsUrl: string, accessToken: string, userId: string) => Promise<void>;
         mxAutoRageshakeStore?: AutoRageshakeStore;
         mxDispatcher: MatrixDispatcher;
     }

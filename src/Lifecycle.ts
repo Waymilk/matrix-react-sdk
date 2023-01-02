@@ -117,7 +117,7 @@ interface ILoadSessionOpts {
  *     failed.
  */
 export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean> {
-    console.log(opts,'opts');
+    console.log(opts, 'opts');
     // alert('loadSession')
     try {
         let enableGuest = opts.enableGuest || false;
@@ -663,7 +663,7 @@ class AbortLoginAndRebuildStorage extends Error { }
 
 async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {
     console.log('entered persistCredentials');
-    console.log(credentials,'credentials');
+    console.log(credentials, 'credentials');
     // credentials.accessToken = 'syt_bWF0cml4X21pbGt3YXk_TckbkGUtGStjziZYHGtb_1SahEZ';
     localStorage.setItem(HOMESERVER_URL_KEY, credentials.homeserverUrl);
     if (credentials.identityServerUrl) {
@@ -960,18 +960,15 @@ export function stopMatrixClient(unsetClient = true): void {
 }
 
 // Utility method to perform a login with an existing access_token
-window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Promise<void> => {
-    console.log(hsUrl,'hsUrl');
-    console.log(accessToken,'accessToken');
-    const tempClient = createClient({
-        baseUrl: hsUrl,
-        accessToken,
-    });
-    const { user_id: userId } = await tempClient.whoami();
+window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string, userId: string): Promise<void> => {
+    console.log(hsUrl, 'hsUrl');
+    console.log(accessToken, 'accessToken');
+    console.log(userId, 'userIduserIduserId');
+
     await doSetLoggedIn({
         homeserverUrl: hsUrl,
         accessToken,
         userId,
     }, true);
-    window.location.reload();
+    // window.location.reload();
 };

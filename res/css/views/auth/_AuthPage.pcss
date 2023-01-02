@@ -23,10 +23,10 @@ limitations under the License.
 }
 
 .mx_AuthPage_modal {
+    position:relative;
     display: flex;
     margin: 100px auto auto;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.33);
+    border-radius: 8px;
     background-color: $authpage-modal-bg-color;
 
     @media only screen and (max-height: 768px) {
@@ -35,5 +35,33 @@ limitations under the License.
 
     @media only screen and (max-width: 480px) {
         margin-top: 0;
+    }
+    .chat-right-pic{
+      width: 232px;
+      position: absolute;
+      right: -104px;
+      top: -41px;
+      z-index: 5;
+    }
+    .chat-left-pic{
+      width: 241px;
+      position: absolute;
+      left: -130px;
+      top: 166px;
+      z-index: 0;
+    }
+    .cloud-pic{
+      width: 205px;
+      position: absolute;
+      left: -93px;
+      bottom: 16px;
+      z-index: 0;
+    }
+    .crowd-pic{
+      width: 277px;
+      position: absolute;
+      right: -99px;
+      bottom: -81px;
+      z-index: 4;
     }
 }

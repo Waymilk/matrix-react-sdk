@@ -1,4 +1,5 @@
 /*
+Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2019 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,18 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_AuthHeaderLogo {
-    margin-top: 15px;
-    flex: 1;
-    padding: 0 16px;
+import React from 'react';
+
+import AuthHeaderLogo from "./AuthHeaderLogo";
+import LanguageSelector from "./LanguageSelector";
+
+interface IProps {
+    disableLanguageSelector?: boolean;
 }
 
-.mx_AuthHeaderLogo img {
-    width: 100%;
-}
-
-@media only screen and (max-width: 480px) {
-    .mx_AuthHeaderLogo {
-        display: none;
+export default class AuthHeader extends React.Component<IProps> {
+    public render(): React.ReactNode {
+        return (
+            <div className="mx_AuthHeader">
+                <AuthHeaderLogo />153123
+                <LanguageSelector disabled={this.props.disableLanguageSelector} />
+            </div>
+        );
     }
 }

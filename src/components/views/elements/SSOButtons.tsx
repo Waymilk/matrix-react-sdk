@@ -21,7 +21,6 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
 import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "matrix-js-sdk/src/@types/auth";
 
-import { handleConnect } from '../../../utils/client/login';
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
 import { _t } from "../../../languageHandler";
@@ -85,14 +84,44 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     const label = idp ? _t("Continue with %(provider)s", { provider: idp.name }) : _t("Sign in with single sign-on");
 
     const onClick = () => {
-        console.log(matrixClient, loginType, fragmentAfterLogin);
-        handleConnect();
-        // const authenticationType = getAuthenticationType(idp?.brand ?? "");
-        // PosthogAnalytics.instance.setAuthenticationType(authenticationType);
-        // PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
+        const authenticationType = getAuthenticationType(idp?.brand ?? "");
+        PosthogAnalytics.instance.setAuthenticationType(authenticationType);
+        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
     };
+
+    let icon;
+    let brandClass;
+    const brandIcon = idp ? getIcon(idp.brand) : null;
+    if (brandIcon) {
+        const brandName = idp.brand.split(".").pop();
+        brandClass = `mx_SSOButton_brand_${brandName}`;
+        icon = <img src={brandIcon} height="24" width="24" alt={brandName} />;
+    } else if (typeof idp?.icon === "string" && idp.icon.startsWith("mxc://")) {
+        const src = mediaFromMxc(idp.icon, matrixClient).getSquareThumbnailHttp(24);
+        icon = <img src={src} height="24" width="24" alt={idp.name} />;
+    }
+
+    const classes = classNames("mx_SSOButton", {
+        [brandClass]: brandClass,
+        mx_SSOButton_mini: mini,
+        mx_SSOButton_default: !idp,
+        mx_SSOButton_primary: primary,
+    });
+
+    if (mini) {
+        // TODO fallback icon
+        return (
+            <AccessibleTooltipButton {...props} title={label} className={classes} onClick={onClick}>
+                { icon }
+            </AccessibleTooltipButton>
+        );
+    }
+
     return (
-        <button className="qr-code" onClick={onClick}>Connect Wallet</button>
+        <AccessibleButton {...props} className={classes} onClick={onClick}>
+            { icon }
+            { label }
+        </AccessibleButton>
     );
 };
 
@@ -103,6 +132,8 @@ interface IProps {
     fragmentAfterLogin?: string;
     primary?: boolean;
 }
+
+const MAX_PER_ROW = 6;
 
 const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentAfterLogin, primary }) => {
     const providers = flow.identity_providers || [];
@@ -118,16 +149,25 @@ const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentA
         </div>;
     }
 
-    // const rows = Math.ceil(providers.length / MAX_PER_ROW);
+    const rows = Math.ceil(providers.length / MAX_PER_ROW);
+    const size = Math.ceil(providers.length / rows);
 
     return <div className="mx_SSOButtons">
-        <SSOButton
-            matrixClient={matrixClient}
-            loginType={loginType}
-            fragmentAfterLogin={fragmentAfterLogin}
-            mini={true}
-            primary={primary}
-        />
+        { chunk(providers, size).map(chunk => (
+            <div key={chunk[0].id} className="mx_SSOButtons_row">
+                { chunk.map(idp => (
+                    <SSOButton
+                        key={idp.id}
+                        matrixClient={matrixClient}
+                        loginType={loginType}
+                        fragmentAfterLogin={fragmentAfterLogin}
+                        idp={idp}
+                        mini={true}
+                        primary={primary}
+                    />
+                )) }
+            </div>
+        )) }
     </div>;
 };
 

@@ -691,6 +691,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 scope: proof.scope.toString(),
                 expiration: proof.expiration.toString(),
             };
+            console.log(params);
             this.loginLogic.loginViaWallet(
                 params,
             ).then((res) => {
@@ -702,7 +703,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     window.mxLoginWithAccessToken(
                         this.props.serverConfig.hsUrl,
                         res.accessToken,
-                        res.user_id,
+                        res.userId,
                     );
                 }
             });
@@ -720,15 +721,15 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         { loader }
                     </h1>
                     <p className='connect-text'>连接钱包登录MetaDAO</p>
-                    { /* { errorTextSection }
+                    { errorTextSection }
                     { serverDeadSection }
                     <ServerPicker
                         serverConfig={this.props.serverConfig}
                         onServerConfigChange={this.props.onServerConfigChange}
                     />
-                    { this.renderLoginComponentForFlows() } */ }
+                    { this.renderLoginComponentForFlows() }
                     <button className="qr-code" onClick={onClick}>连接Aplink钱包</button>
-                    { /* { footer } */ }
+                     { footer }
                 </AuthBody>
             </AuthPage>
         );

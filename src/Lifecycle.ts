@@ -970,5 +970,5 @@ window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string, userI
         accessToken,
         userId,
     }, true);
-    // window.location.reload();
+    window.location.reload();
 };

@@ -664,7 +664,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             // setTimeout(() => {
             //     console.log(document.querySelector('.aplink-link-qr'), 'dom');
             // }, 500);
-            const identity = await link.login("anchor-link-demo");
+            const identity = await link.login("element-web");
             const { account, proof, proofKey, proofValid } = await verifyProof(
                 link,
                 identity,

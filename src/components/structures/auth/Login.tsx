@@ -660,25 +660,18 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             );
         }
         const onClick = async () => {
-            console.log(445);
-
             const link = initLink();
-            console.log(link, "linklink");
-            setTimeout(() => {
-                console.log(document.querySelector('.aplink-link-qr'), 'dom');
-            }, 500);
+            // setTimeout(() => {
+            //     console.log(document.querySelector('.aplink-link-qr'), 'dom');
+            // }, 500);
             const identity = await link.login("anchor-link-demo");
-
-            console.log(identity);
             const { account, proof, proofKey, proofValid } = await verifyProof(
                 link,
                 identity,
             );
-
             const walletAddress = proof.signer.actor.toString();
             const authority = proof.signer.permission.toString();
             console.log(proof.chainId.toString(), 'ChainId');
-
             // const chainId = network.chainId;
             // Storage.set('walletAddress', walletAddress);
             // Storage.set('authority', authority);
@@ -691,14 +684,9 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 scope: proof.scope.toString(),
                 expiration: proof.expiration.toString(),
             };
-            console.log(params);
             this.loginLogic.loginViaWallet(
                 params,
             ).then((res) => {
-                console.log(res, 'loginViaWallet----res');
-                console.log(this.props.serverConfig.hsUrl, 'this.props.serverConfig.hsUrl');
-                console.log(window.mxLoginWithAccessToken, 'window.mxLoginWithAccessToken');
-
                 if (res.accessToken && window.mxLoginWithAccessToken) {
                     window.mxLoginWithAccessToken(
                         this.props.serverConfig.hsUrl,
@@ -707,7 +695,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     );
                 }
             });
-
             // const authenticationType = getAuthenticationType(idp?.brand ?? "");
             // PosthogAnalytics.instance.setAuthenticationType(authenticationType);
             // PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
@@ -720,16 +707,16 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         { _t('Sign in') }
                         { loader }
                     </h1>
-                    <p className='connect-text'>连接钱包登录MetaDAO</p>
-                    { errorTextSection }
+                    <p className='connect-text'>{ _t('Connect wallet to login to MetaDAO') }</p>
+                    { /* { errorTextSection }
                     { serverDeadSection }
                     <ServerPicker
                         serverConfig={this.props.serverConfig}
                         onServerConfigChange={this.props.onServerConfigChange}
                     />
-                    { this.renderLoginComponentForFlows() }
-                    <button className="qr-code" onClick={onClick}>连接Aplink钱包</button>
-                     { footer }
+                    { this.renderLoginComponentForFlows() } */ }
+                    <button className="qr-code" onClick={onClick}>{ _t('Connect APLink Wallet') }</button>
+                    { footer }
                 </AuthBody>
             </AuthPage>
         );

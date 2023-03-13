@@ -570,7 +570,7 @@ async function doSetLoggedIn(
     credentials: IMatrixClientCreds,
     clearStorageEnabled: boolean,
 ): Promise<MatrixClient> {
-    console.log(credentials, 'credentials');
+    console.log(credentials, 'credentials----');
     // credentials.accessToken = 'syt_bWlsa3dheQ_orZlVTgBPcXgtAPXEMZl_1rLZmb';
     // credentials.userId = '@milkway:matrix.org';
     // // credentials.homeserverUrl = 'https://matrix.ambt.art/';
@@ -960,7 +960,7 @@ export function stopMatrixClient(unsetClient = true): void {
 }
 
 // Utility method to perform a login with an existing access_token
-window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string, userId: string): Promise<void> => {
+window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string, userId: string, deviceId:string): Promise<void> => {
     console.log(hsUrl, 'hsUrl');
     console.log(accessToken, 'accessToken');
     console.log(userId, 'userIduserIduserId');
@@ -969,6 +969,7 @@ window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string, userI
         homeserverUrl: hsUrl,
         accessToken,
         userId,
+        deviceId,
     }, true);
     window.location.reload();
 };

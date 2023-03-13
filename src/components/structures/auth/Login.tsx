@@ -799,7 +799,8 @@ export default class LoginComponent extends React.PureComponent<
                     window.mxLoginWithAccessToken(
                         this.props.serverConfig.hsUrl,
                         res.accessToken,
-                        res.userId
+                        res.userId,
+                        res.deviceId
                     );
                 }
             });

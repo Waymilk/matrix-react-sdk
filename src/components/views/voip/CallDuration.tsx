@@ -29,7 +29,7 @@ interface CallDurationProps {
 export const CallDuration: FC<CallDurationProps> = memo(({ delta }) => {
     // Clock desync could lead to a negative duration, so just hide it if that happens
     if (delta <= 0) return null;
-    return <div className="mx_CallDuration">{ formatPreciseDuration(delta) }</div>;
+    return <div className="mx_CallDuration">{formatPreciseDuration(delta)}</div>;
 });
 
 interface GroupCallDurationProps {
@@ -43,11 +43,9 @@ interface GroupCallDurationProps {
 export const GroupCallDuration: FC<GroupCallDurationProps> = ({ groupCall }) => {
     const [now, setNow] = useState(() => Date.now());
     useEffect(() => {
-        const timer = setInterval(() => setNow(Date.now()), 1000);
+        const timer = window.setInterval(() => setNow(Date.now()), 1000);
         return () => clearInterval(timer);
     }, []);
 
-    return groupCall.creationTs === null
-        ? null
-        : <CallDuration delta={now - groupCall.creationTs} />;
+    return groupCall.creationTs === null ? null : <CallDuration delta={now - groupCall.creationTs} />;
 };

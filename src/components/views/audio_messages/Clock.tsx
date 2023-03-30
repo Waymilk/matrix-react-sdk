@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,9 +43,12 @@ export default class Clock extends React.Component<Props> {
         return currentFloor !== nextFloor;
     }
 
-    public render() {
-        return <span aria-live={this.props["aria-live"]} role={this.props.role} className='mx_Clock'>
-            { this.props.formatFn(this.props.seconds) }
-        </span>;
+    public render(): React.ReactNode {
+        return (
+            <span aria-live={this.props["aria-live"]} role={this.props.role} className="mx_Clock">
+                {/* formatFn set by defaultProps */}
+                {this.props.formatFn!(this.props.seconds)}
+            </span>
+        );
     }
 }
